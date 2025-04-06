@@ -20,8 +20,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    animation: intro 3s ease-out 1s forwards; /* 3s, 1s*/
-    color: #4bdbef;
+    animation: intro 3s ease-out 1s forwards;
+    color: rgb(75, 213, 238);
     font-weight: 400;
     font-size: 2rem;
     opacity: 0;
