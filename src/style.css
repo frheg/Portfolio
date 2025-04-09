@@ -134,7 +134,6 @@
   p, li {
     list-style-type: none;
     margin: 10px;
-    /* text-align: justify; */
   }
 
   a {
@@ -149,7 +148,7 @@
   }
 
   h2 {
-    margin-top: 5%;
+    margin-top: 10%;
   }
   
   #title, #subtitle {

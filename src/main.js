@@ -114,7 +114,7 @@ Array.from({ length: STAR_COUNT }).forEach(createStar);
 // Create a planet
 // =========================
 const planetRadius = 10;
-const planetVector = new THREE.Vector3(-50, 10, -50);
+const planetVector = new THREE.Vector3(-50, 30, -50);
 const planetSize = 1;
 const planetGeometry = new THREE.SphereGeometry(planetRadius, 32, 32);
 const planetMaterial = new THREE.MeshBasicMaterial();
