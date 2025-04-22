@@ -1,9 +1,4 @@
-// =========================
-// Portfolio Website Refactor: main.js
-// Features: Three.js animation, Star Wars-style scroll, Intro lock
-// =========================
-
-import './style.css';
+// import './style.css';
 import * as THREE from "three";
 
 // =========================
@@ -34,16 +29,18 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // =========================
 // Skyblock
 // ==========================
-const cubeLoader = new THREE.CubeTextureLoader();
-const skybox = cubeLoader.load([
-  'src/assets/Pictures/SkyBox/kurt/space_bk.png',
-  'src/assets/Pictures/SkyBox/kurt/space_dn.png',
-  'src/assets/Pictures/SkyBox/kurt/space_ft.png',
-  'src/assets/Pictures/SkyBox/kurt/space_lf.png',
-  'src/assets/Pictures/SkyBox/kurt/space_rt.png',
-  'src/assets/Pictures/SkyBox/kurt/space_up.png'
-]);
-scene.background = skybox;
+// const cubeLoader = new THREE.CubeTextureLoader();
+// const skybox = cubeLoader.load([
+//   'src/assets/Pictures/SkyBox/kurt/space_bk.png',
+//   'src/assets/Pictures/SkyBox/kurt/space_dn.png',
+//   'src/assets/Pictures/SkyBox/kurt/space_ft.png',
+//   'src/assets/Pictures/SkyBox/kurt/space_lf.png',
+//   'src/assets/Pictures/SkyBox/kurt/space_rt.png',
+//   'src/assets/Pictures/SkyBox/kurt/space_up.png'
+// ]);
+// scene.background = skybox;
+
+// scene.background = new THREE.Color(0x000000); // fallback black
 
 // =========================
 // Lighting
