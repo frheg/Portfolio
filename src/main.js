@@ -1,11 +1,11 @@
-// import './style.css';
-import * as THREE from "three";
+
+import * as THREE from '../node_modules/.vite/deps/three.js';
 
 // =========================
 // Constants & Scene Setup
 // =========================
 
-const CAMERA_POSITION = new THREE.Vector3(0, 0, 100); // Initial offset for better perspective
+const CAMERA_POSITION = new THREE.Vector3(0, 0, 150); // Initial offset for better perspective
 const STAR_COUNT = 8000;
 const STAR_FIELD_RADIUS = 700;
 const STAR_ROTATION_SPEED = 0.005;
@@ -29,16 +29,16 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // =========================
 // Skyblock
 // ==========================
-// const cubeLoader = new THREE.CubeTextureLoader();
-// const skybox = cubeLoader.load([
-//   'src/assets/Pictures/SkyBox/kurt/space_bk.png',
-//   'src/assets/Pictures/SkyBox/kurt/space_dn.png',
-//   'src/assets/Pictures/SkyBox/kurt/space_ft.png',
-//   'src/assets/Pictures/SkyBox/kurt/space_lf.png',
-//   'src/assets/Pictures/SkyBox/kurt/space_rt.png',
-//   'src/assets/Pictures/SkyBox/kurt/space_up.png'
-// ]);
-// scene.background = skybox;
+const cubeLoader = new THREE.CubeTextureLoader();
+const skybox = cubeLoader.load([
+  'src/assets/Pictures/SkyBox/kurt/space_bk.png',
+  'src/assets/Pictures/SkyBox/kurt/space_dn.png',
+  'src/assets/Pictures/SkyBox/kurt/space_ft.png',
+  'src/assets/Pictures/SkyBox/kurt/space_lf.png',
+  'src/assets/Pictures/SkyBox/kurt/space_rt.png',
+  'src/assets/Pictures/SkyBox/kurt/space_up.png'
+]);
+scene.background = skybox;
 
 // scene.background = new THREE.Color(0x000000); // fallback black
 
@@ -78,7 +78,7 @@ Array.from({ length: STAR_COUNT }).forEach(createStar);
 // Create a planet
 // =========================
 const planetRadius = 10;
-const planetVector = new THREE.Vector3(-50, 10, -50);
+const planetVector = new THREE.Vector3(-100, 10, -50);
 const planetSize = 1;
 const planetGeometry = new THREE.SphereGeometry(planetRadius, 32, 32);
 const planetMaterial = new THREE.MeshBasicMaterial();
@@ -102,7 +102,7 @@ textureLoader.load('src/assets/Models/Earth 3D Model/textures/1_earth_8k.jpg', (
 // Comet Setup with Soft Glow and Detailed Trail
 // =========================
 
-const COMET_COUNT = 2;
+const COMET_COUNT = 5;
 const comets = [];
 const trailLength = 20;
 const trailRadius = 0.8;
@@ -247,6 +247,17 @@ const spin = (object, axis, speed) => {
   object.rotation[axis] += speed;
 };
 
+// ============================================
+// =========================
+// Scroll-based Camera Movement
+// =========================
+let targetZ = CAMERA_POSITION.z;
+window.addEventListener('scroll', () => {
+  targetZ = CAMERA_POSITION.z - window.scrollY * 0.05;
+});
+// ============================================
+
+
 // =========================
 // Animation Loop
 // =========================
@@ -300,6 +311,9 @@ function animate() {
 
   // Update Planet Rotation
   planet.rotation.y += 0.001;
+
+  // Update Camera Position
+  camera.position.z += (targetZ - camera.position.z) * 0.05;
 
   renderer.render(scene, camera);
 }
