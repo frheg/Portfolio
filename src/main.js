@@ -32,6 +32,20 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 // =========================
+// Skyblock
+// ==========================
+const cubeLoader = new THREE.CubeTextureLoader();
+const skybox = cubeLoader.load([
+  'src/assets/Pictures/SkyBox/kurt/space_bk.png',
+  'src/assets/Pictures/SkyBox/kurt/space_dn.png',
+  'src/assets/Pictures/SkyBox/kurt/space_ft.png',
+  'src/assets/Pictures/SkyBox/kurt/space_lf.png',
+  'src/assets/Pictures/SkyBox/kurt/space_rt.png',
+  'src/assets/Pictures/SkyBox/kurt/space_up.png'
+]);
+scene.background = skybox;
+
+// =========================
 // Lighting
 // =========================
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
