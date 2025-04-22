@@ -55,7 +55,21 @@ scene.add(ambientLight, pointLight);
 const stars = [];
 const createStar = () => {
   const starGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-  const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+  // Random star temperature color (bluish, yellowish, reddish)
+  const h = Math.random(); // full hue range from 0.0 (red) to 1.0 (violet)
+  const s = 0.6 + Math.random() * 0.4; // 0.6–1.0 saturation
+  const l = 0.6 + Math.random() * 0.3; // 0.6–0.9 lightness
+
+  const starColor = new THREE.Color().setHSL(h, s, l);
+
+  const starMaterial = new THREE.MeshBasicMaterial({
+    color: starColor,
+    transparent: true,
+    opacity: 0.7,
+    depthWrite: false
+  });
+  starMaterial.userData = { baseColor: starColor.clone() };
   const star = new THREE.Mesh(starGeometry, starMaterial);
 
   const radius = Math.random() * STAR_FIELD_RADIUS - STAR_FIELD_RADIUS / 2;
@@ -276,7 +290,8 @@ function animate() {
 
     // Star Twinkle
     const intensity = Math.abs(Math.sin(time + index * 0.1)) * 1.2 + 0.3;
-    star.material.color.setScalar(intensity);
+    const baseColor = star.material.userData.baseColor.clone(); // preserve original hue
+    star.material.color.copy(baseColor).multiplyScalar(intensity);      
   });
 
   //===========================================================
