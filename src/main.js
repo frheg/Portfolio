@@ -1,4 +1,3 @@
-
 import * as THREE from '../node_modules/.vite/deps/three.js';
 
 // =========================
@@ -6,7 +5,7 @@ import * as THREE from '../node_modules/.vite/deps/three.js';
 // =========================
 
 const CAMERA_POSITION = new THREE.Vector3(0, 0, 150); // Initial offset for better perspective
-const STAR_COUNT = 8000;
+const STAR_COUNT = 9000;
 const STAR_FIELD_RADIUS = 700;
 const STAR_ROTATION_SPEED = 0.005;
 
@@ -78,7 +77,7 @@ Array.from({ length: STAR_COUNT }).forEach(createStar);
 // Create a planet
 // =========================
 const planetRadius = 10;
-const planetVector = new THREE.Vector3(-100, 10, -50);
+const planetVector = new THREE.Vector3(-50, 10, -50);
 const planetSize = 1;
 const planetGeometry = new THREE.SphereGeometry(planetRadius, 32, 32);
 const planetMaterial = new THREE.MeshBasicMaterial();
@@ -218,12 +217,6 @@ for (let i = 0; i < COMET_COUNT; i++) {
   );
   const velocity = toCenter.add(offset).normalize().multiplyScalar(Math.random() * 1.5 + 0.5);
 
-  // const velocity = new THREE.Vector3(
-  //   (Math.random() - 0.5),
-  //   (Math.random() - 0.5),
-  //   (Math.random() - 0.5)
-  // ).normalize().multiplyScalar(Math.random() * 1.5 + 0.5);
-
   scene.add(group);
   comets.push({ group, velocity, trailGroup });
 }
@@ -252,8 +245,16 @@ const spin = (object, axis, speed) => {
 // Scroll-based Camera Movement
 // =========================
 let targetZ = CAMERA_POSITION.z;
+let hasRotated = false;
+let currentRotationY = 0;
+let targetRotationY = 0;
 window.addEventListener('scroll', () => {
   targetZ = CAMERA_POSITION.z - window.scrollY * 0.05;
+
+  if (!hasRotated) {
+    targetRotationY = -Math.PI / 6; // 30° left
+    hasRotated = true;
+  }
 });
 // ============================================
 
@@ -314,6 +315,17 @@ function animate() {
 
   // Update Camera Position
   camera.position.z += (targetZ - camera.position.z) * 0.05;
+
+  // Map scroll position to rotation
+  const scrollMax = document.body.scrollHeight - window.innerHeight;
+  const scrollRatio = window.scrollY / scrollMax;
+  const maxAngle = Math.PI / 20; // 45 degrees to the left
+
+  const targetRotationY = -scrollRatio * maxAngle;
+
+  // Smoothly interpolate current Y rotation toward target
+  currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+  camera.rotation.y = currentRotationY;
 
   renderer.render(scene, camera);
 }
