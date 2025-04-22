@@ -1,13 +1,16 @@
 import * as THREE from '../node_modules/.vite/deps/three.js';
+import { createGalaxy, animateGalaxies } from './galaxyModule.js';
 
 // =========================
 // Constants & Scene Setup
 // =========================
 
 const CAMERA_POSITION = new THREE.Vector3(0, 0, 150); // Initial offset for better perspective
-const STAR_COUNT = 9000;
+const STAR_COUNT = 7000;
 const STAR_FIELD_RADIUS = 700;
 const STAR_ROTATION_SPEED = 0.005;
+
+const GALAXY_COUNT = 20;
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -48,6 +51,26 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 const pointLight = new THREE.PointLight(0xffffff, 1, 500);
 pointLight.position.set(50, 50, 50);
 scene.add(ambientLight, pointLight);
+
+// =========================
+// Galaxies
+// =========================
+const galaxies = [];
+const galaxyColors = [
+  { h: 0.05, s: 0.8, l: 0.6 },  // red-orange
+  { h: 0.6, s: 0.9, l: 0.7 },   // blue
+  { h: 0.15, s: 0.7, l: 0.8 }   // yellow
+];
+
+for (let i = 0; i < GALAXY_COUNT; i++) {
+  const pos = new THREE.Vector3(
+    (Math.random() - 0.5) * 1000,
+    (Math.random() - 0.5) * 1000,
+    (Math.random() - 0.5) * 1000
+  );
+  const theme = galaxyColors[Math.floor(Math.random() * galaxyColors.length)];
+  galaxies.push(createGalaxy({ position: pos, colorBase: theme, scene }));
+}
 
 // =========================
 // Star Field Creation
@@ -279,6 +302,7 @@ window.addEventListener('scroll', () => {
 let time = 0;
 function animate() {
   requestAnimationFrame(animate);
+  animateGalaxies(galaxies);
 
   // Update Stars (Twinkling Effect)
   time += 0.1;
