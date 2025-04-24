@@ -1,5 +1,5 @@
 import * as THREE from '../node_modules/.vite/deps/three.js';
-import { createGalaxy, animateGalaxies } from './galaxyModule.js';
+import { createGalaxy, animateGalaxies } from '../src/galaxyModule.js';
 
 // =========================
 // Constants & Scene Setup
