@@ -1,0 +1,2 @@
+# fredrichegland.no
+Portfolio Website
